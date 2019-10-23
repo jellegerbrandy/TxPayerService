@@ -1,14 +1,30 @@
-# TxPayerService
-Using NodeJS with Express library
-#### 1. Install Pre-requisites
-1. Node
-2. Npm
-#### 2. Start API
-1. `git clone https://github.com/cbrzn/TxPayerService`
-2. `cd TxPayerService`
-3. `npm install` 
-4. Start api running `npm run dev`
-5. Create .env in the root of the project to save all environment variables
+# TxPayerService - Gasless Reputation Redemption From Token
 
-The endpoint to create a tx is:
-`/pay/:your_wallet`
+### Installing
+
+`npm install`
+
+### Running locally
+
+`npm run dev`
+
+### Config Enviroment
+`Set your own .env, checkout .env-example for reference :)`
+
+
+## Project Architecture
+
+### Endpoints
+
+Work In Progress
+
+Pay Someone
+1. `/pay/:eth_address`
+
+### Layers Of Data Types
+
+TODO
+
+## Folder Structure & Tools
+
+TODO
