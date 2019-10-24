@@ -2,7 +2,7 @@ import { getDefaultAccount } from '../web3';
 
 export const address = async (_, response) => {
   try {
-    const address = getDefaultAccount
+    const address = await getDefaultAccount()
     const message = `address: ${address}`
     response.send({ status: 200, message, address })
   } catch (error) {
