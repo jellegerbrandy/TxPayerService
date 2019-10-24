@@ -9,8 +9,8 @@ const {
 } = process.env
 
 // Instanciate Web3
-// const provider = new Web3.providers.HttpProvider(NETWORK_URL)
-const provider = new HDWalletProvider(WALLET_MNEMONIC, NETWORK_URL);
+const provider = new Web3.providers.HttpProvider(NETWORK_URL)
+// const provider = new HDWalletProvider(WALLET_MNEMONIC, NETWORK_URL);
 export const web3 = new Web3(provider);
 web3.eth.defaultAccount = PROVIDER_ADDRESS;
 

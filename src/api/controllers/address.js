@@ -1,4 +1,4 @@
-import { defaultAccount,  getBalance, accounts, sendSignedTransaction, getTransactionCount, toWei, fromWei } from '../web3';
+import { defaultAccount } from '../web3';
 
 export const address = async (request, response) => {
   try {
