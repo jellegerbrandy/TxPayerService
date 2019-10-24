@@ -1,4 +1,4 @@
-# TxPayerService - Gasless Reputation Redemption From Token
+# Gasless Reputation Redemption From Token
 
 ### Installing
 
@@ -8,22 +8,21 @@
 
 `npm run dev`
 
-### Config Enviroment
+### Config Environment
 `Set your own .env, checkout .env-example for reference :)`
-
 
 ## Project Architecture
 
 ### Endpoints
 
-Work In Progress
+#### Pay Someone
+`/pay/:eth_address/:amount`
 
-Pay Someone
-1. `/pay/:eth_address`
+##### Get Provider Address
+`/address`
 
-### Layers Of Data Types
-
-TODO
+#### Get Provider Address Balance
+`/balance`
 
 ## Folder Structure & Tools
 

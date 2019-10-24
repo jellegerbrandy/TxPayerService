@@ -1,9 +1,9 @@
 import express from 'express';
 
-import { payer } from '../controllers';
+import { balance } from '../controllers';
 
 const router = express.Router();
 
-router.get('/pay/:recipient/:amount', payer);
+router.get('/balance', balance);
 
 export default router;

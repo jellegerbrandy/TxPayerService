@@ -1,2 +1,5 @@
 import payer from './payer';
-export { payer }
+import balance from './balance';
+import address from './address';
+
+export const routes = [ payer, balance, address ]
