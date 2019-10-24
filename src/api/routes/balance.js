@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { balance } from '../controllers';
+import { balance } from 'api/controllers';
 
 const router = express.Router();
 

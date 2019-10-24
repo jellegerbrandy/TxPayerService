@@ -1,4 +1,4 @@
-import { sendSignedTx, etherToWei, getTransactionNumber, getDefaultAccount, signTransaction } from '../web3'
+import { sendSignedTx, etherToWei, getTransactionNumber, getDefaultAccount, signTransaction } from 'api/web3'
 
 export const payer = async (request, response) => {
   // this has to be changed to retrieve the private key from mneomonic 

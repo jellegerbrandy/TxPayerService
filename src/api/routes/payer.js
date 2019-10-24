@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { payer } from '../controllers';
+import { payer } from 'api/controllers';
 
 const router = express.Router();
 
