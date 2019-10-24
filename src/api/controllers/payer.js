@@ -1,21 +1,20 @@
-import { defaultAccount, accounts, sendSignedTransaction, getTransactionCount, toWei } from '../web3';
+import { sendSignedTx, etherToWei, getTransactionNumber, getDefaultAccount, signTransaction } from '../web3'
 
 export const payer = async (request, response) => {
-  const {
-   PROVIDER_PRIVATE_KEY
-  } = process.env
-
+  // this has to be changed to retrieve the private key from mneomonic 
+  const PRIVATE_KEY = '0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d'
   try {
     const { recipient, amount } = request.params
-    const AMOUNT_TO_SEND = toWei(amount, 'ether');
-    const nonce = await getTransactionCount(defaultAccount);    
+    const defaultAccount = await getDefaultAccount()
+    const AMOUNT_TO_SEND = etherToWei(amount);
+    const nonce = await getTransactionNumber(defaultAccount);    
     const transactionObject = {
         to: recipient,
         value: AMOUNT_TO_SEND,
         gas: 21000,
         nonce
     }
-    const signedTransaction = await accounts.signTransaction(transactionObject, PROVIDER_PRIVATE_KEY);
+    const signedTransaction = await signTransaction(transactionObject, PRIVATE_KEY);
     console.log('Sending ether...');
     const transactionHash = hash => {
       console.log(`Transaction done. Hash of transaction: ${hash}`);
@@ -25,9 +24,12 @@ export const payer = async (request, response) => {
       console.log(`An error has occured: ${error}`);
       response.send({ status: 503, message: 'An error has occured', error });
     }
-    sendSignedTransaction(signedTransaction.rawTransaction)
-    .on('transactionHash', transactionHash)
-    .on('error', onError)        
+    try {
+      const txHash = await sendSignedTx(signedTransaction.rawTransaction)
+      transactionHash(txHash)        
+    } catch (txError) {
+      onError(txError)
+    }
   } catch (error) {
     console.log(`An error has occured: ${error}`);
     response.send({ status: 503, message: `An error has occured: ${error}` })

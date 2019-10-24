@@ -1,8 +1,8 @@
-import { defaultAccount } from '../web3';
+import { getDefaultAccount } from '../web3';
 
-export const address = async (request, response) => {
+export const address = async (_, response) => {
   try {
-    const address = defaultAccount
+    const address = getDefaultAccount
     const message = `address: ${address}`
     response.send({ status: 200, message, address })
   } catch (error) {

@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  tx-payer-service:
+    build: .
+    volumes:
+      - .:/usr/app
+    ports:
+      - 8010:8010
+    links:
+      - ganache
+    environment:
+      - NETWORK_URL=http://ganache:8545
+      - WALLET_MNEOMONIC=myth like bonus scare over problem client lizard pioneer submit female collect
+    command: npm start
+  ganache:
+    image: 'daostack/migration:0.0.1-rc.30-v0'
+    ports:
+      - '8545:8545'

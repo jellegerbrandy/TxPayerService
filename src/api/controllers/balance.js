@@ -1,12 +1,12 @@
-import { defaultAccount,  getBalance, fromWei } from '../web3';
+import { getBalance, getDefaultAccount, toEther } from '../web3'
 
-export const balance = async (request, response) => {
+export const balance = async (_, response) => {
   try {
+    const defaultAccount = await getDefaultAccount()
     const senderBalanceInWei = await getBalance(defaultAccount);
-    const balanceInEth = fromWei(senderBalanceInWei, 'ether');
-    console.log(`Balance available in address: ${balanceInEth} ETH`);
-    const message = `Balance available in address: ${balanceInEth} ETH`
-    const balance = balanceInEth
+    const balance = toEther(senderBalanceInWei);
+    const message = `Balance available in address: ${balance} ETH`
+    console.log(message);
     response.send({ status: 200, message, balance })
   } catch (error) {
     console.log(`An error has occured: ${error}`);
