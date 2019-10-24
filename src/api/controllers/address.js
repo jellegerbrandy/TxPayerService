@@ -1,4 +1,4 @@
-import { getDefaultAccount } from '../web3';
+import { getDefaultAccount } from 'api/web3';
 
 export const address = async (_, response) => {
   try {
