@@ -1,4 +1,5 @@
 import web3 from './core'
+import { fromWei, toWei } from './utils';
 
 export const getBalance = async account => {
   const balance = await web3.eth.getBalance(account)
@@ -11,7 +12,7 @@ export const getDefaultAccount = async () => {
 }
 
 export const toEther = amount => {
-  return web3.utils.fromWei(amount.toString(), 'ether');
+  return fromWei(amount.toString(), 'ether');
 }
 
 export const sendSignedTx = signedTx => {
@@ -23,7 +24,7 @@ export const sendSignedTx = signedTx => {
 }
 
 export const etherToWei = amount => {
-  return web3.utils.toWei(amount, 'ether')
+  return toWei(amount, 'ether')
 }
 
 
