@@ -1,7 +1,7 @@
 import express from "express";
 import morgan from "morgan";
 import dotenv from "dotenv";
-import 'app-module-path/register'
+import 'app-module-path/register';
 
 import { routes } from "api/routes";
 
