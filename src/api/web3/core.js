@@ -4,11 +4,13 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const {
-  NETWORK_URL, TARGET_CONTRACT_ADDRESS, TARGET_CONTRACT_METHOD, WALLET_MNEOMONIC
+  NETWORK_URL, TARGET_CONTRACT_ADDRESS, TARGET_CONTRACT_METHOD, WALLET_MNEOMONIC, RINKEBY, LOCAL
 } = process.env
 
+const NETWORK = RINKEBY ? 'https://rinkeby.infura.io/v3/aab5c86e538b43509008efff47d61162' : LOCAL ? 'http://127.0.0.1:8545' : NETWORK_URL 
+
 // Instanciate Web3
-const provider = new HDWalletProvider(WALLET_MNEOMONIC, NETWORK_URL, 0, 10);
+const provider = new HDWalletProvider(WALLET_MNEOMONIC, NETWORK, 0, 10);
 export const web3 = new Web3(provider);
 
-export default web3
+export default web3;

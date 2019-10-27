@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "babel-node src/server.js",
-    "dev": "nodemon --exec babel-node src/server.js",
+    "dev:local": "LOCAL=true nodemon --exec babel-node src/server.js",
+    "dev:rinkeby": "RINKEBY=true nodemon --exec babel-node src/server.js",
     "tests:unit": "mocha --require @babel/register 'tests/unit/**spec.js' --exit",
     "tests:integration": "mocha --require @babel/register 'tests/integration/**spec.js' --exit",
     "tests": "mocha --require @babel/register 'tests/**/**spec.js' --exit"
