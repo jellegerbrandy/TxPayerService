@@ -8,7 +8,7 @@ const {
 } = process.env
 
 // Instanciate Web3
-const provider = new HDWalletProvider(WALLET_MNEOMONIC, NETWORK_URL);
+const provider = new HDWalletProvider(WALLET_MNEOMONIC, NETWORK_URL, 0, 10);
 export const web3 = new Web3(provider);
 
 export default web3

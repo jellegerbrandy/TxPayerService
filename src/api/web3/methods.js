@@ -6,6 +6,12 @@ export const getBalance = async account => {
   return balance
 }
 
+export const getRandomAccount = async () => {
+  const index = Math.floor((Math.random() * 5) + 1);
+  const account = await web3.eth.getAccounts()
+  return account[index]
+}
+
 export const getDefaultAccount = async () => {
   const account = await web3.eth.getAccounts()
   return account[0]

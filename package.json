@@ -6,7 +6,9 @@
   "scripts": {
     "start": "babel-node src/server.js",
     "dev": "nodemon --exec babel-node src/server.js",
-    "test": "jest"
+    "tests:unit": "mocha --require @babel/register 'tests/unit/**spec.js' --exit",
+    "tests:integration": "mocha --require @babel/register 'tests/integration/**spec.js' --exit",
+    "tests": "mocha --require @babel/register 'tests/**/**spec.js' --exit"
   },
   "author": "",
   "license": "ISC",
@@ -22,6 +24,11 @@
     "@babel/core": "^7.4.4",
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.4.4",
-    "nodemon": "^1.19.0"
+    "@babel/register": "^7.6.2",
+    "chai": "^4.2.0",
+    "mocha": "^6.2.2",
+    "nodemon": "^1.19.0",
+    "sinon": "^7.5.0",
+    "supertest": "^4.0.2"
   }
 }

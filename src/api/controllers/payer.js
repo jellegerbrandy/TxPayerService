@@ -2,7 +2,7 @@ import { sendSignedTx, etherToWei, getTransactionNumber, getDefaultAccount, sign
 
 export const payer = async (request, response) => {
   // this has to be changed to retrieve the private key from mneomonic 
-  const PRIVATE_KEY = '0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d'
+  const PRIVATE_KEY = 'b21806bbd11c596728f30f5d28e181508af9834938793feaeec3c13a61b09975'
   try {
     const { recipient, amount } = request.params
     const defaultAccount = await getDefaultAccount()
