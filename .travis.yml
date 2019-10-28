@@ -3,12 +3,12 @@ language: node_js
 node_js:
   - 10
 
-before_install:
-  - npm install -g npm@latest
-  - npm install -g ganache-cli
+cache:
+  directories:
+    - node_modules
 
-install:
-  - npm install
+before_script:
+  - npm i -g ganache-cli
 
 script:
   - ganache-cli -m 'deal copy supply rally height clutch tornado cabbage ill shoe pizza help' > /dev/null &
