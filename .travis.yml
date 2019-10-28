@@ -10,5 +10,5 @@ cache:
 script:
   - ganache-cli -m 'deal copy supply rally height clutch tornado cabbage ill shoe pizza help' > /dev/null &
   - sleep 5
-  - npm run tests:unit
+  - npm run tests
   - npm run start
