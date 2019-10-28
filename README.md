@@ -1,5 +1,7 @@
 # Gasless Reputation Redemption From Token
 
+[![Build Status](https://travis-ci.com/dOrgTech/TxPayerService.svg?branch=develop)](https://travis-ci.com/dOrgTech/TxPayerService)
+
 ### Installing
 
 `npm install`
@@ -9,6 +11,7 @@
 `npm run dev`
 
 ### Config Environment
+
 `Set your own .env, checkout .env-example for reference :)`
 
 ## Project Architecture
@@ -16,12 +19,15 @@
 ### Endpoints
 
 #### Pay Someone
+
 `/pay/:eth_address/:amount`
 
 ##### Get Provider Address
+
 `/address`
 
 #### Get Provider Address Balance
+
 `/balance`
 
 ## Folder Structure & Tools
