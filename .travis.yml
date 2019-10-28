@@ -8,7 +8,7 @@ cache:
     - node_modules
 
 script:
-  - ganache-cli -p 7545 > /dev/null &
+  - ganache-cli -m 'deal copy supply rally height clutch tornado cabbage ill shoe pizza help' > /dev/null &
   - sleep 5
   - npm run tests:unit
   - npm run start
