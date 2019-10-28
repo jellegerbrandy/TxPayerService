@@ -1,5 +1,5 @@
 import { web3 } from "./core";
-import { fromWei, toWei } from "./utils";
+import { fromWei, toWei, toHex } from "./utils";
 
 export const getBalance = async account => {
   const balance = await web3.eth.getBalance(account);
@@ -36,4 +36,8 @@ export const etherToWei = amount => {
 
 export const getTransactionNumber = async account => {
   return await web3.eth.getTransactionCount(account);
+};
+
+export const toHexadecimal = number => {
+  return toHex(number);
 };

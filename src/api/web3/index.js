@@ -6,5 +6,9 @@ export {
   getDefaultAccount,
   toEther,
   etherToWei,
-  getTransactionNumber
+  getTransactionNumber,
+  newContract,
+  sendContractMethod,
+  encodeParameter,
+  toHexadecimal
 } from "./methods";

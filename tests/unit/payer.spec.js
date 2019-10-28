@@ -21,7 +21,9 @@ const getPayerTest = async () => {
   web3mock.expects("getTransactionNumber").returns(10);
   web3mock.expects("sendTx").returns("");
 
-  const response = await request(app).get(`/pay/${address}/5`);
+  const response = await request(app)
+    .post(`/pay`)
+    .send({ recipient: address, amount: 10 });
 
   expect(response.body.status).to.eq(200);
 };

@@ -1,7 +1,7 @@
 import express from "express";
 import morgan from "morgan";
 import dotenv from "dotenv";
-import 'app-module-path/register';
+import "app-module-path/register";
 
 import { routes } from "api/routes";
 
@@ -11,12 +11,18 @@ const app = express();
 
 const requestHeaders = (_, response, next) => {
   response.header("Access-Control-Allow-Origin", "*");
-  next()
+  next();
 };
 
 const appUse = (a, b) => (b ? app.use(a, b) : app.use(a));
 
-const toUse = [ morgan("combined"), requestHeaders, ...routes ];
+const toUse = [
+  express.json(),
+  morgan("combined"),
+  requestHeaders,
+  ...routes,
+  express.urlencoded({ extended: false })
+];
 toUse.forEach(object => appUse(object));
 
 export default app;

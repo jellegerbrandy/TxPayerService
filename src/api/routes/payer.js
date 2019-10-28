@@ -1,9 +1,9 @@
-import express from 'express';
+import express from "express";
 
-import { payer } from 'api/controllers';
+import { payer } from "api/controllers";
 
 const router = express.Router();
 
-router.get('/pay/:recipient/:amount', payer);
+router.post("/pay", payer);
 
 export default router;
