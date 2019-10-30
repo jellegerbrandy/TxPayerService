@@ -1,5 +1,5 @@
 import { web3 } from "./core";
-import { fromWei, toWei, toHex } from "./utils";
+import { fromWei } from "./utils";
 
 export const getBalance = async account => {
   const balance = await web3.eth.getBalance(account);
@@ -19,19 +19,6 @@ export const getDefaultAccount = async () => {
 
 export const toEther = amount => {
   return fromWei(amount.toString(), "ether");
-};
-
-export const sendTx = txObject => {
-  return new Promise((resolve, reject) => {
-    web3.eth
-      .sendTransaction(txObject)
-      .on("transactionHash", txHash => resolve(txHash))
-      .on("error", error => reject(error));
-  });
-};
-
-export const etherToWei = amount => {
-  return toWei(amount, "ether");
 };
 
 export const getTransactionNumber = async account => {
@@ -74,8 +61,4 @@ export const sendContractMethod = (
         reject(error);
       });
   });
-};
-
-export const getByteCode = async address => {
-  return await web3.eth.getCode(address);
 };
