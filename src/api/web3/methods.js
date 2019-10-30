@@ -48,12 +48,10 @@ export const deployContract = (contract, from, byteCode, parameters) => {
       .deploy({ data: byteCode, arguments: parameters })
       .send({
         from,
-        gas: 1500000,
-        gasPrice: "30000000000000"
+        gas: 3000000
       })
       .on("error", error => reject(error))
       .then(newContractInstance => {
-        console.log(newContractInstance.options);
         resolve(newContractInstance.options.address);
       });
   });

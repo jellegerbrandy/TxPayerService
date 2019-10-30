@@ -5,10 +5,9 @@ import app from "../../src/app";
 import {
   getRandomAccount,
   deployContract,
-  newContract,
-  getByteCode
+  newContract
 } from "../../src/api/web3";
-import { EXAMPLE_ABI } from "../abi.data";
+import { EXAMPLE_ABI, BYTE_CODE } from "../constants.data";
 
 const paymentTest = async () => {
   try {
@@ -19,10 +18,13 @@ const paymentTest = async () => {
       from,
       3000000
     );
-    const byteCode = await getByteCode(contract.options.address);
-    const contractAddress = await deployContract(contract, from, byteCode, [
+    const contractAddress = await deployContract(contract, from, BYTE_CODE, [
       10
     ]);
+
+    process.env.WHITELISTED_ADDRESSES = `${contractAddress} 0xbcbFF059589c2c6A4530cb816EB398BC4096e923 0x5Aa8609B948A8697B7b826c33BC51E6209E0Ac67`;
+    process.env.WHITELISTED_METHODS =
+      "vote(uint8) redeem(address,uint256,uint256)";
 
     const parameters = {
       to: contractAddress,
