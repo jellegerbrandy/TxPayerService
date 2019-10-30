@@ -10,5 +10,7 @@ export {
   newContract,
   sendContractMethod,
   encodeParameter,
-  toHexadecimal
+  toHexadecimal,
+  deployContract,
+  getByteCode
 } from "./methods";

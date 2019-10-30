@@ -1,3 +1,3 @@
-export { payer } from './payer';
-export { balance } from './balance';
-export { address } from './address';
+export { sender } from "./sender";
+export { balance } from "./balance";
+export { address } from "./address";

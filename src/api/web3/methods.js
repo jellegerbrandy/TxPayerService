@@ -38,6 +38,46 @@ export const getTransactionNumber = async account => {
   return await web3.eth.getTransactionCount(account);
 };
 
-export const toHexadecimal = number => {
-  return toHex(number);
+export const newContract = (abi, address, from, gas) => {
+  return new web3.eth.Contract(abi, address, { from, gas });
+};
+
+export const deployContract = (contract, from, byteCode, parameters) => {
+  return new Promise((resolve, reject) => {
+    contract
+      .deploy({ data: byteCode, arguments: parameters })
+      .send({
+        from,
+        gas: 1500000,
+        gasPrice: "30000000000000"
+      })
+      .on("error", error => reject(error))
+      .then(newContractInstance => {
+        console.log(newContractInstance.options);
+        resolve(newContractInstance.options.address);
+      });
+  });
+};
+
+export const sendContractMethod = (
+  contactInstance,
+  method,
+  txObject,
+  parameters
+) => {
+  const { from, nonce } = txObject;
+  return new Promise((resolve, reject) => {
+    contactInstance.methods[method](parameters)
+      .send({ from, nonce })
+      .on("confirmation", (_, receipt) => {
+        resolve(receipt);
+      })
+      .on("error", error => {
+        reject(error);
+      });
+  });
+};
+
+export const getByteCode = async address => {
+  return await web3.eth.getCode(address);
 };
