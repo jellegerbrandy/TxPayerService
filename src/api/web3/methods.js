@@ -1,4 +1,4 @@
-import { web3 } from "./core";
+import { web3, provider } from "./core";
 import { fromWei } from "./utils";
 
 export const getBalance = async account => {
@@ -25,8 +25,8 @@ export const getTransactionNumber = async account => {
   return await web3.eth.getTransactionCount(account);
 };
 
-export const newContract = (abi, address, from, gas) => {
-  return new web3.eth.Contract(abi, address, { from, gas });
+export const newContract = (abi, from, gas) => {
+  return new web3.eth.Contract(abi, { from, gas });
 };
 
 export const deployContract = (contract, from, byteCode, parameters) => {
@@ -61,4 +61,28 @@ export const sendContractMethod = (
         reject(error);
       });
   });
+};
+
+export const checkWeb3Connection = async (_, response, next) => {
+  if (provider.engine.currentBlock) {
+    next();
+  } else {
+    response.send({
+      status: 400,
+      message: "Ensure NETWORK_URL is correct - Provider could not be reached"
+    });
+  }
+};
+
+export const checkAccountBalance = async (_, response, next) => {
+  const defaultAcc = await getDefaultAccount();
+  const defaultAccountBalance = fromWei(await web3.eth.getBalance(defaultAcc));
+  if (defaultAccountBalance > 1) {
+    next();
+  } else {
+    response.send({
+      status: 400,
+      message: `The service has run out of funds (It has less than 1 ether) - Please refill by doing a deposit to the wallet ${defaultAcc}`
+    });
+  }
 };

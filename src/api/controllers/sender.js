@@ -53,15 +53,19 @@ export const sender = async (request, response) => {
         };
         const contractInstance = newContract(
           [methodAbi],
-          to,
           defaultAccount,
           3000000
         );
+
+        contractInstance.options.address = to;
+
+        const parsedParameters =
+          parameters.length > 1 ? parameters.join(", ") : parameters[0];
         const receipt = await sendContractMethod(
           contractInstance,
           methodAbi.name,
           txObject,
-          parameters
+          parsedParameters
         );
         transactionHash(receipt.transactionHash, response);
       } catch (error) {
