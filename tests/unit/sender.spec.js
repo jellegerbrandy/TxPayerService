@@ -23,7 +23,11 @@ const getPayerTest = async () => {
   const address = "0x47017142E5A406EA651c53616d30c5aa55Fe7B76";
   web3mock.expects("getDefaultAccount").returns(address);
   web3mock.expects("getTransactionNumber").returns(10);
-  web3mock.expects("newContract").returns("");
+  web3mock.expects("newContract").returns({
+    options: {
+      address: ""
+    }
+  });
   web3mock.expects("sendContractMethod").returns("");
 
   const parameters = {
@@ -49,7 +53,7 @@ const getPayerTest = async () => {
   const response = await request(app)
     .post(`/send-tx`)
     .send(parameters);
-
+  console.log(response.body);
   expect(response.body.status).to.eq(200);
 };
 
