@@ -26,8 +26,32 @@ Parameters to send:
 ```
 {
   to: Recipient Address,
-  methodInterface: Method ABI,
+  methodAbi: Method ABI,
   parameters: Parameters of contract method
+}
+```
+
+
+This is an example of how you should send the parameters:
+```
+{
+	"to": "0xbcbFF059589c2c6A4530cb816EB398BC4096e923",
+	"methodAbi": {
+		"constant": false,
+		"inputs": [
+			{
+				"internalType": "uint8",
+				"name": "toProposal",
+				"type": "uint8"
+			}
+		],
+		"name": "vote",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	"parameters": 5
 }
 ```
 
