@@ -1,5 +1,5 @@
-import payer from './payer';
-import balance from './balance';
-import address from './address';
+import sender from "./sender";
+import balance from "./balance";
+import address from "./address";
 
-export const routes = [ payer, balance, address ]
+export const routes = [sender, balance, address];
