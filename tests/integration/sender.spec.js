@@ -20,7 +20,6 @@ const sendTxTest = async () => {
       10
     ]);
     contract.options.address = contractAddress;
-    console.log(contract.options.address);
     process.env.WHITELISTED_ADDRESSES = `${contractAddress} 0x5Aa8609B948A8697B7b826c33BC51E6209E0Ac67`;
     process.env.WHITELISTED_METHODS =
       "vote(uint8) redeem(address,uint256,uint256)";
@@ -55,8 +54,10 @@ const sendTxTest = async () => {
 };
 
 const checkTxOnChainTest = async () => {
-  const winner = await contract.methods.winningProposal().call();
-  expect(winner).to.eq("5");
+  setTimeout(async () => {
+    const winner = await contract.methods.winningProposal().call();
+    expect(winner).to.eq("5");
+  }, 3000);
 };
 
 const payerEndpoint = it("Integration payer test", sendTxTest);
