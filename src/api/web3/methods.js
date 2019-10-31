@@ -1,5 +1,7 @@
 import { web3 } from "./core";
-import { fromWei } from "./utils";
+import { fromWei, checkWeb3 } from "./utils";
+
+export const checkWeb3Connection = checkWeb3;
 
 export const getBalance = async account => {
   const balance = await web3.eth.getBalance(account);

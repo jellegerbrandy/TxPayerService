@@ -8,5 +8,6 @@ export {
   newContract,
   sendContractMethod,
   encodeParameter,
-  deployContract
+  deployContract,
+  checkWeb3Connection
 } from "./methods";

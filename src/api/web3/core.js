@@ -3,14 +3,7 @@ import HDWalletProvider from "@truffle/hdwallet-provider";
 import dotenv from "dotenv";
 dotenv.config();
 
-const {
-  NETWORK_URL,
-  TARGET_CONTRACT_ADDRESS,
-  TARGET_CONTRACT_METHOD,
-  WALLET_MNEMONIC,
-  RINKEBY,
-  LOCAL
-} = process.env;
+const { NETWORK_URL, WALLET_MNEMONIC, RINKEBY, LOCAL } = process.env;
 
 const NETWORK = RINKEBY
   ? "https://rinkeby.infura.io/v3/aab5c86e538b43509008efff47d61162"

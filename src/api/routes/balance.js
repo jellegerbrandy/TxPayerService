@@ -1,9 +1,10 @@
-import express from 'express';
+import express from "express";
 
-import { balance } from 'api/controllers';
+import { balance } from "api/controllers";
+import { checkWeb3Connection } from "api/web3";
 
 const router = express.Router();
 
-router.get('/balance', balance);
+router.get("/balance", checkWeb3Connection, balance);
 
 export default router;

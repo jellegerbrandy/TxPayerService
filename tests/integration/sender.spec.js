@@ -5,7 +5,8 @@ import app from "../../src/app";
 import {
   getRandomAccount,
   deployContract,
-  newContract
+  newContract,
+  getDefaultAccount
 } from "../../src/api/web3";
 import { EXAMPLE_ABI, BYTE_CODE } from "../constants.data";
 
@@ -22,7 +23,7 @@ const paymentTest = async () => {
       10
     ]);
 
-    process.env.WHITELISTED_ADDRESSES = `${contractAddress} 0xbcbFF059589c2c6A4530cb816EB398BC4096e923 0x5Aa8609B948A8697B7b826c33BC51E6209E0Ac67`;
+    process.env.WHITELISTED_ADDRESSES = `${contractAddress} 0x5Aa8609B948A8697B7b826c33BC51E6209E0Ac67`;
     process.env.WHITELISTED_METHODS =
       "vote(uint8) redeem(address,uint256,uint256)";
 
@@ -43,13 +44,17 @@ const paymentTest = async () => {
         stateMutability: "nonpayable",
         type: "function"
       },
-      parameters: 5
+      parameters: [5]
     };
 
     const response = await request(app)
       .post(`/send-tx`)
       .send(parameters);
+
+    // const balance = await contract.methods.winningProposal().call();
+
     expect(response.body.status).to.eq(200);
+    // expect(balance).to.eq(5)
   } catch (error) {
     console.log(error);
   }
