@@ -26,7 +26,8 @@ Parameters to send:
 ```
 {
   to: Recipient Address,
-  methodInterface: Method ABI
+  methodInterface: Method ABI,
+  parameters: Parameters of contract method
 }
 ```
 
