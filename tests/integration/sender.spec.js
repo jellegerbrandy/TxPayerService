@@ -5,24 +5,22 @@ import app from "../../src/app";
 import {
   getRandomAccount,
   deployContract,
-  newContract,
-  getDefaultAccount
+  newContract
 } from "../../src/api/web3";
 import { EXAMPLE_ABI, BYTE_CODE } from "../constants.data";
 
-const paymentTest = async () => {
+let contract;
+
+const sendTxTest = async () => {
   try {
     const from = await getRandomAccount();
-    const contract = newContract(
-      EXAMPLE_ABI,
-      "0xbcbFF059589c2c6A4530cb816EB398BC4096e923",
-      from,
-      3000000
-    );
+    contract = newContract(EXAMPLE_ABI, from, 4700000);
+
     const contractAddress = await deployContract(contract, from, BYTE_CODE, [
       10
     ]);
-
+    contract.options.address = contractAddress;
+    console.log(contract.options.address);
     process.env.WHITELISTED_ADDRESSES = `${contractAddress} 0x5Aa8609B948A8697B7b826c33BC51E6209E0Ac67`;
     process.env.WHITELISTED_METHODS =
       "vote(uint8) redeem(address,uint256,uint256)";
@@ -50,16 +48,18 @@ const paymentTest = async () => {
     const response = await request(app)
       .post(`/send-tx`)
       .send(parameters);
-
-    // const balance = await contract.methods.winningProposal().call();
-
     expect(response.body.status).to.eq(200);
-    // expect(balance).to.eq(5)
   } catch (error) {
     console.log(error);
   }
 };
 
-const payerEndpoint = it("Integration payer test", paymentTest);
+const checkTxOnChainTest = async () => {
+  const winner = await contract.methods.winningProposal().call();
+  expect(winner).to.eq("5");
+};
 
-describe("Integration send payment", () => payerEndpoint);
+const payerEndpoint = it("Integration payer test", sendTxTest);
+const checkChain = it("Check chain test", checkTxOnChainTest);
+
+describe("Integration send payment", () => [payerEndpoint, checkChain]);

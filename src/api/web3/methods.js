@@ -1,7 +1,8 @@
 import { web3 } from "./core";
-import { fromWei, checkWeb3 } from "./utils";
+import { fromWei, checkWeb3, checkBalance } from "./utils";
 
 export const checkWeb3Connection = checkWeb3;
+export const checkAccountBalance = checkBalance;
 
 export const getBalance = async account => {
   const balance = await web3.eth.getBalance(account);
@@ -27,8 +28,8 @@ export const getTransactionNumber = async account => {
   return await web3.eth.getTransactionCount(account);
 };
 
-export const newContract = (abi, address, from, gas) => {
-  return new web3.eth.Contract(abi, address, { from, gas });
+export const newContract = (abi, from, gas) => {
+  return new web3.eth.Contract(abi, { from, gas });
 };
 
 export const deployContract = (contract, from, byteCode, parameters) => {
