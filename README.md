@@ -1,6 +1,6 @@
-# Gasless Reputation Redemption From Token
-
 [![Build Status](https://travis-ci.com/dOrgTech/TxPayerService.svg?branch=develop)](https://travis-ci.com/dOrgTech/TxPayerService)
+
+# Tx Payer Service
 
 ### Installing
 
@@ -18,15 +18,23 @@
 
 ### Endpoints
 
-#### Pay Someone
+#### POST - Create tx
 
-`/pay/:eth_address/:amount`
+`/send-tx`
+Parameters to send:
 
-##### Get Provider Address
+```
+{
+  to: Recipient Address,
+  methodInterface: Method ABI
+}
+```
+
+##### GET - Retrieve provider address
 
 `/address`
 
-#### Get Provider Address Balance
+#### GET - Retrieve provider address balance
 
 `/balance`
 
