@@ -65,7 +65,7 @@ export const sender = async (request, response) => {
           contractInstance,
           methodAbi.name,
           txObject,
-          parsedParameters
+          parameters
         );
         transactionHash(receipt.transactionHash, response);
       } catch (error) {

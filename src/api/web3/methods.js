@@ -52,7 +52,7 @@ export const sendContractMethod = (
 ) => {
   const { from, nonce } = txObject;
   return new Promise((resolve, reject) => {
-    contactInstance.methods[method](parameters)
+    contactInstance.methods[method](parameters[0], parameters[1], parameters[2])
       .send({ from, nonce })
       .on("confirmation", (_, receipt) => {
         resolve(receipt);
@@ -66,7 +66,11 @@ export const sendContractMethod = (
 export const callContractMethod = (contractInstance, method, parameters) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const result = await contractInstance.methods[method](parameters).call();
+      const result = await contractInstance.methods[method](
+        parameters[0],
+        parameters[1],
+        parameters[2]
+      ).call();
       resolve(result);
     } catch (error) {
       reject(error);
@@ -104,19 +108,15 @@ export const tryContractMethod = async (request, response, next) => {
   const contractInstance = newContract([methodAbi], defaultAccount, 3000000);
   contractInstance.options.address = to;
   try {
-    const parsedParameters =
-      parameters.length > 1 ? parameters.join(", ") : parameters[0];
-    await callContractMethod(
-      contractInstance,
-      methodAbi.name,
-      parsedParameters
-    );
+    const parsedParameters = parameters.length > 1 ? parameters : parameters[0];
+    await callContractMethod(contractInstance, methodAbi.name, parameters);
     next();
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    console.log(error);
     response.send({
       status: 400,
-      message: `Transaction can not be done`
+      message: `Transaction can not be done`,
+      error
     });
   }
 };
