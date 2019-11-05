@@ -11,11 +11,11 @@ const app = express();
 
 const requestHeaders = (_, response, next) => {
   response.header("Access-Control-Allow-Origin", "*");
-  res.header(
+  response.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
   );
-  res.header("Access-Control-Allow-Credentials", true);
+  response.header("Access-Control-Allow-Credentials", true);
   next();
 };
 
