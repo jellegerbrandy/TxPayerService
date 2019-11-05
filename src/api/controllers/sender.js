@@ -59,8 +59,6 @@ export const sender = async (request, response) => {
 
         contractInstance.options.address = to;
 
-        const parsedParameters =
-          parameters.length > 1 ? parameters.join(", ") : parameters[0];
         const receipt = await sendContractMethod(
           contractInstance,
           methodAbi.name,
