@@ -10,5 +10,7 @@ export {
   encodeParameter,
   deployContract,
   checkWeb3Connection,
-  checkAccountBalance
+  checkAccountBalance,
+  tryContractMethod,
+  callContractMethod
 } from "./methods";
