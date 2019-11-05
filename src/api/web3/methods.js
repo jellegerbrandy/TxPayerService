@@ -63,6 +63,17 @@ export const sendContractMethod = (
   });
 };
 
+export const callContractMethod = (contractInstance, method, parameters) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const result = await contractInstance.methods[method](parameters).call();
+      resolve(result);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 export const checkWeb3Connection = async (_, response, next) => {
   if (provider.engine.currentBlock) {
     next();
@@ -83,6 +94,29 @@ export const checkAccountBalance = async (_, response, next) => {
     response.send({
       status: 400,
       message: `The service has run out of funds (It has less than 1 ether) - Please refill by doing a deposit to the wallet ${defaultAcc}`
+    });
+  }
+};
+
+export const tryContractMethod = async (request, response, next) => {
+  const defaultAccount = await getDefaultAccount();
+  const { to, methodAbi, parameters } = request.body;
+  const contractInstance = newContract([methodAbi], defaultAccount, 3000000);
+  contractInstance.options.address = to;
+  try {
+    const parsedParameters =
+      parameters.length > 1 ? parameters.join(", ") : parameters[0];
+    await callContractMethod(
+      contractInstance,
+      methodAbi.name,
+      parsedParameters
+    );
+    next();
+  } catch (e) {
+    console.log(e);
+    response.send({
+      status: 400,
+      message: `Transaction can not be done`
     });
   }
 };

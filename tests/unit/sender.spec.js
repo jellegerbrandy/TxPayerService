@@ -28,6 +28,7 @@ const getPayerTest = async () => {
       address: ""
     }
   });
+  web3mock.expects("callContractMethod").returns("");
   web3mock.expects("sendContractMethod").returns("");
 
   const parameters = {
@@ -47,7 +48,7 @@ const getPayerTest = async () => {
       stateMutability: "nonpayable",
       type: "function"
     },
-    parameters: 5
+    parameters: [5]
   };
 
   const response = await request(app)
