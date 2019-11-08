@@ -48,11 +48,11 @@ export const sendContractMethod = (
   contactInstance,
   method,
   txObject,
-  ...parameters
+  parameters
 ) => {
   const { from, nonce } = txObject;
   return new Promise((resolve, reject) => {
-    contactInstance.methods[method](...parameters)
+    contactInstance.methods[method](parameters[0], parameters[1], parameters[2])
       .send({ from, nonce })
       .on("confirmation", (_, receipt) => {
         resolve(receipt);
@@ -63,11 +63,13 @@ export const sendContractMethod = (
   });
 };
 
-export const callContractMethod = (contractInstance, method, ...parameters) => {
+export const callContractMethod = (contractInstance, method, parameters) => {
   return new Promise(async (resolve, reject) => {
     try {
       const result = await contractInstance.methods[method](
-        ...parameters
+        parameters[0],
+        parameters[1],
+        parameters[2]
       ).call();
       resolve(result);
     } catch (error) {
@@ -106,7 +108,7 @@ export const tryContractMethod = async (request, response, next) => {
   const contractInstance = newContract([methodAbi], defaultAccount, 3000000);
   contractInstance.options.address = to;
   try {
-    await callContractMethod(contractInstance, methodAbi.name, ...parameters);
+    await callContractMethod(contractInstance, methodAbi.name, parameters);
     next();
   } catch (error) {
     console.log(error);
