@@ -25,7 +25,7 @@ export const getTransactionNumber = async account => {
   return await web3.eth.getTransactionCount(account);
 };
 
-export const newContract = (abi, from, gas) => {
+export const newContract = (abi, from) => {
   return new web3.eth.Contract(abi, { from });
 };
 
@@ -50,10 +50,10 @@ export const sendContractMethod = (
   txObject,
   parameters
 ) => {
-  const { from, nonce } = txObject;
+  const { from, nonce, gas } = txObject;
   return new Promise((resolve, reject) => {
     contactInstance.methods[method](parameters[0], parameters[1], parameters[2])
-      .send({ from, nonce })
+      .send({ from, nonce, gas })
       .on("confirmation", (_, receipt) => {
         resolve(receipt);
       })
@@ -66,12 +66,12 @@ export const sendContractMethod = (
 export const callContractMethod = (contractInstance, method, parameters) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const result = await contractInstance.methods[method](
+      const gasEstimation = await contractInstance.methods[method](
         parameters[0],
         parameters[1],
         parameters[2]
-      ).call();
-      resolve(result);
+      ).estimateGas({ from: await getDefaultAccount() });
+      resolve(gasEstimation);
     } catch (error) {
       reject(error);
     }
@@ -105,10 +105,16 @@ export const checkAccountBalance = async (_, response, next) => {
 export const tryContractMethod = async (request, response, next) => {
   const defaultAccount = await getDefaultAccount();
   const { to, methodAbi, parameters } = request.body;
-  const contractInstance = newContract([methodAbi], defaultAccount, 3000000);
+  const contractInstance = newContract([methodAbi], defaultAccount);
   contractInstance.options.address = to;
   try {
-    await callContractMethod(contractInstance, methodAbi.name, parameters);
+    const gasEstimate = await callContractMethod(
+      contractInstance,
+      methodAbi.name,
+      parameters
+    );
+    const gas = gasEstimate ? gasEstimate * 2 : 1000000;
+    request.gas = gas;
     next();
   } catch (error) {
     console.log(error);

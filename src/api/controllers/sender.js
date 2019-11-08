@@ -49,13 +49,10 @@ export const sender = async (request, response) => {
         const nonce = await getTransactionNumber(defaultAccount);
         const txObject = {
           from: defaultAccount,
-          nonce
+          nonce,
+          gas: request.gas
         };
-        const contractInstance = newContract(
-          [methodAbi],
-          defaultAccount,
-          3000000
-        );
+        const contractInstance = newContract([methodAbi], defaultAccount);
 
         contractInstance.options.address = to;
 
