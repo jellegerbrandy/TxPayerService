@@ -50,10 +50,10 @@ export const sendContractMethod = (
   txObject,
   parameters
 ) => {
-  const { from, nonce } = txObject;
+  const { from, nonce, gas } = txObject;
   return new Promise((resolve, reject) => {
     contactInstance.methods[method](parameters)
-      .send({ from, nonce })
+      .send({ from, nonce, gas })
       .on("confirmation", (_, receipt) => {
         resolve(receipt);
       })
@@ -66,8 +66,10 @@ export const sendContractMethod = (
 export const callContractMethod = (contractInstance, method, parameters) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const result = await contractInstance.methods[method](parameters).call();
-      resolve(result);
+      const gasEstimation = await contractInstance.methods[method](
+        parameters
+      ).estimateGas({ from: await getDefaultAccount() });
+      resolve(gasEstimation);
     } catch (error) {
       reject(error);
     }
@@ -106,11 +108,14 @@ export const tryContractMethod = async (request, response, next) => {
   try {
     const parsedParameters =
       parameters.length > 1 ? parameters.join(", ") : parameters[0];
-    await callContractMethod(
+    const gasEstimate = await callContractMethod(
       contractInstance,
       methodAbi.name,
       parsedParameters
     );
+
+    const gas = gasEstimate ? gasEstimate * 2 : 1000000;
+    request.gas = gas;
     next();
   } catch (e) {
     console.log(e);
