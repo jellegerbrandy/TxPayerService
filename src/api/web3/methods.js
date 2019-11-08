@@ -90,7 +90,7 @@ export const checkWeb3Connection = async (_, response, next) => {
 export const checkAccountBalance = async (_, response, next) => {
   const defaultAcc = await getDefaultAccount();
   const defaultAccountBalance = fromWei(await web3.eth.getBalance(defaultAcc));
-  if (defaultAccountBalance > 1) {
+  if (defaultAccountBalance > 0.001) {
     next();
   } else {
     response.send({
