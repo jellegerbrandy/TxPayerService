@@ -22,6 +22,7 @@ const onError = (error, response) => {
 export const sender = async (request, response) => {
   try {
     const { to, methodAbi, parameters } = request.body;
+    const { gas, gasLimit } = request;
     const { WHITELISTED_ADDRESSES, WHITELISTED_METHODS } = process.env;
     const defaultAccount = await getDefaultAccount();
 
@@ -50,7 +51,8 @@ export const sender = async (request, response) => {
         const txObject = {
           from: defaultAccount,
           nonce,
-          gas: request.gas
+          gas,
+          gasLimit
         };
         const contractInstance = newContract([methodAbi], defaultAccount);
 

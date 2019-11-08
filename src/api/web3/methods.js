@@ -113,8 +113,9 @@ export const tryContractMethod = async (request, response, next) => {
       methodAbi.name,
       parameters
     );
-    const gas = gasEstimate ? gasEstimate : 1000000;
+    const gas = gasEstimate ? gasEstimate * 2 : 1000000;
     request.gas = gas;
+    request.gasLimit = gas + 1000;
     next();
   } catch (error) {
     console.log(error);
