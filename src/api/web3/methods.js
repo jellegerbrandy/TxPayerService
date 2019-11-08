@@ -107,22 +107,23 @@ export const tryContractMethod = async (request, response, next) => {
   const { to, methodAbi, parameters } = request.body;
   const contractInstance = newContract([methodAbi], defaultAccount);
   contractInstance.options.address = to;
+  let gas = 0;
   try {
     const gasEstimate = await callContractMethod(
       contractInstance,
       methodAbi.name,
       parameters
     );
-    const gas = gasEstimate ? gasEstimate * 2 : 1000000;
+    gas = gasEstimate ? gasEstimate * 2 : 1000000;
     request.gas = gas;
     request.gasLimit = gas + 1000;
-    next();
   } catch (error) {
     console.log(error);
-    response.send({
-      status: 400,
-      message: `Transaction can not be done`,
-      error
-    });
+    // response.send({
+    //   status: 400,
+    //   message: `Transaction can not be done`,
+    //   error
+    // });
   }
+  next();
 };
