@@ -25,8 +25,8 @@ export const getTransactionNumber = async account => {
   return await web3.eth.getTransactionCount(account);
 };
 
-export const newContract = (abi, from, gas) => {
-  return new web3.eth.Contract(abi, { from, gas });
+export const newContract = (abi, from) => {
+  return new web3.eth.Contract(abi, { from });
 };
 
 export const deployContract = (contract, from, byteCode, parameters) => {
