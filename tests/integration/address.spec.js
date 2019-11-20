@@ -9,6 +9,6 @@ const getAddressTest = async () => {
   expect(response.body.address).to.match(/(?:0x)/);
 };
 
-const addressEnpoint = it("Address test", getAddressTest);
+// const addressEnpoint = it("Address test", getAddressTest);
 
 // describe("Integration check address", () => addressEnpoint);

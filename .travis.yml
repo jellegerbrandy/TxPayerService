@@ -11,6 +11,6 @@ before_script:
   - npm i -g ganache-cli
 
 script:
-  - ganache-cli -m 'because duck general like aisle across parade hundred brisk novel property process bitter wealth leaf' > /dev/null &
+  - ganache-cli -m 'deal copy supply rally height clutch tornado cabbage ill shoe pizza help' > /dev/null &
   - sleep 5
   - npm run tests
