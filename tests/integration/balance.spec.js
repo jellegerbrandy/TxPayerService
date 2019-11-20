@@ -11,4 +11,4 @@ const getBalanceTest = async () => {
 
 const balanceEnpoint = it("Integration balance test", getBalanceTest);
 
-describe("Integration check balance", () => balanceEnpoint);
+// describe("Integration check balance", () => balanceEnpoint);

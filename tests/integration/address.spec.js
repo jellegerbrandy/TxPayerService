@@ -11,4 +11,4 @@ const getAddressTest = async () => {
 
 const addressEnpoint = it("Address test", getAddressTest);
 
-describe("Integration check address", () => addressEnpoint);
+// describe("Integration check address", () => addressEnpoint);
