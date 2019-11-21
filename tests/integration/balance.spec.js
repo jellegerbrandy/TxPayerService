@@ -9,6 +9,6 @@ const getBalanceTest = async () => {
   expect(response.body.balance).to.be.a("string");
 };
 
-// const balanceEnpoint = it("Integration balance test", getBalanceTest);
+const balanceEnpoint = it("Integration balance test", getBalanceTest);
 
-// describe("Integration check balance", () => balanceEnpoint);
+describe("Integration check balance", () => balanceEnpoint);
