@@ -21,7 +21,7 @@
     "express": "^4.16.4",
     "morgan": "^1.9.1",
     "netlify-lambda": "^1.6.3",
-    "serverless": "^1.58.0",
+    "serverless-http": "^2.3.0",
     "web3": "^1.2.2"
   },
   "devDependencies": {
