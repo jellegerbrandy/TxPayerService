@@ -1,3 +1,6 @@
 [build]
   command = "npm install && npm run build"
   functions = "functions"
+  
+[environment]
+  NETWORK_URL="https://mainnet.infura.io/v3/aab5c86e538b43509008efff47d61162"

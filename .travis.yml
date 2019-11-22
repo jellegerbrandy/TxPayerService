@@ -12,5 +12,6 @@ before_script:
 
 script:
   - ganache-cli -m 'myth like bonus scare over problem client lizard pioneer submit female collect' -d > /dev/null &
-  - sleep 10
+  - sleep 5
   - npm run tests
+  - npm run build
