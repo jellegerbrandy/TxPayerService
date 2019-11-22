@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "babel-node src/server.js",
+    "build": "netlify-lambda build src/..",
     "dev:local": "LOCAL=true nodemon --exec babel-node src/server.js",
     "dev:rinkeby": "RINKEBY=true nodemon --exec babel-node src/server.js",
     "tests:unit": "mocha --require @babel/register 'tests/unit/**spec.js' --exit",
@@ -19,6 +20,8 @@
     "dotenv": "^8.0.0",
     "express": "^4.16.4",
     "morgan": "^1.9.1",
+    "netlify-lambda": "^1.6.3",
+    "serverless-http": "^2.3.0",
     "web3": "^1.2.2"
   },
   "devDependencies": {

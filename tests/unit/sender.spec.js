@@ -29,6 +29,7 @@ const getPayerTest = async () => {
     }
   });
   web3mock.expects("callContractMethod").returns("");
+  web3mock.expects("checkAccountBalance").returns("");
   web3mock.expects("sendContractMethod").returns("");
 
   const parameters = {
