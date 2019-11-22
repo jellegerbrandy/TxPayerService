@@ -77,8 +77,7 @@ export const callContractMethod = (contractInstance, method, parameters) => {
 };
 
 export const checkWeb3Connection = async (_, response, next) => {
-  const isConnected = await web3.eth.net.isListening();
-  if (isConnected) {
+  if (provider.engine.currentBlock) {
     next();
   } else {
     response.send({
