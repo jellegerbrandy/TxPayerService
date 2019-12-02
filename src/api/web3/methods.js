@@ -48,11 +48,11 @@ export const sendContractMethod = (
   contactInstance,
   method,
   txObject,
-  parameters
+  ...parameters
 ) => {
   const { from, nonce, gas } = txObject;
   return new Promise((resolve, reject) => {
-    contactInstance.methods[method](parameters)
+    contactInstance.methods[method](...parameters)
       .send({ from, nonce, gas })
       .on("confirmation", (_, receipt) => {
         resolve(receipt);
@@ -63,11 +63,11 @@ export const sendContractMethod = (
   });
 };
 
-export const callContractMethod = (contractInstance, method, parameters) => {
+export const callContractMethod = (contractInstance, method, ...parameters) => {
   return new Promise(async (resolve, reject) => {
     try {
       const gasEstimation = await contractInstance.methods[method](
-        parameters
+        ...parameters
       ).estimateGas({ from: await getDefaultAccount() });
       resolve(gasEstimation);
     } catch (error) {
@@ -90,12 +90,12 @@ export const checkWeb3Connection = async (_, response, next) => {
 export const checkAccountBalance = async (_, response, next) => {
   const defaultAcc = await getDefaultAccount();
   const defaultAccountBalance = fromWei(await web3.eth.getBalance(defaultAcc));
-  if (defaultAccountBalance > 1) {
+  if (defaultAccountBalance > 0.001) {
     next();
   } else {
     response.send({
       status: 400,
-      message: `The service has run out of funds (It has less than 1 ether) - Please refill by doing a deposit to the wallet ${defaultAcc}`
+      message: `The service has run out of funds (It has less than 0.001 ether) - Please refill by doing a deposit to the wallet ${defaultAcc}`
     });
   }
 };
@@ -103,25 +103,25 @@ export const checkAccountBalance = async (_, response, next) => {
 export const tryContractMethod = async (request, response, next) => {
   const defaultAccount = await getDefaultAccount();
   const { to, methodAbi, parameters } = request.body;
-  const contractInstance = newContract([methodAbi], defaultAccount, 3000000);
+  const contractInstance = newContract([methodAbi], defaultAccount);
   contractInstance.options.address = to;
+  let gas = 0;
   try {
-    const parsedParameters =
-      parameters.length > 1 ? parameters.join(", ") : parameters[0];
     const gasEstimate = await callContractMethod(
       contractInstance,
       methodAbi.name,
-      parsedParameters
+      ...parameters
     );
-
-    const gas = gasEstimate ? gasEstimate * 2 : 1000000;
+    gas = gasEstimate ? gasEstimate * 2 : 1000000;
     request.gas = gas;
-    next();
-  } catch (e) {
-    console.log(e);
-    response.send({
-      status: 400,
-      message: `Transaction can not be done`
-    });
+    request.gasLimit = gas + 1000;
+  } catch (error) {
+    console.log(error);
+    // response.send({
+    //   status: 400,
+    //   message: `Transaction can not be done`,
+    //   error
+    // });
   }
+  next();
 };

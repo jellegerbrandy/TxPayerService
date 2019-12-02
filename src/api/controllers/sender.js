@@ -22,6 +22,7 @@ const onError = (error, response) => {
 export const sender = async (request, response) => {
   try {
     const { to, methodAbi, parameters } = request.body;
+    const { gas, gasLimit } = request;
     const { WHITELISTED_ADDRESSES, WHITELISTED_METHODS } = process.env;
     const defaultAccount = await getDefaultAccount();
 
@@ -33,16 +34,20 @@ export const sender = async (request, response) => {
       return method.includes(methodAbi.name);
     });
 
-    const regExp = /\(([^)]+)\)/;
-    const methodInputsTypes = regExp.exec(WHITELISTED_METHODS);
+    /*
+     * There appears to be an issue with the following parameter checks
+     */
+
+    // const regExp = /\(([^)]+)\)/;
+    // const methodInputsTypes = regExp.exec(WHITELISTED_METHODS);
 
     let correctParameters = true;
-    const methodArguments = methodInputsTypes[1].split(",");
-    methodArguments.forEach((inputType, index) => {
-      if (inputType !== methodAbi.inputs[index].type) {
-        correctParameters = false;
-      }
-    });
+    // const methodArguments = methodInputsTypes[1].split(",");
+    // methodArguments.forEach((inputType, index) => {
+    //   if (inputType !== methodAbi.inputs[index].type) {
+    //     correctParameters = false;
+    //   }
+    // });
 
     if (validAddress && validMethod.length > 0 && correctParameters) {
       try {
@@ -50,19 +55,18 @@ export const sender = async (request, response) => {
         const txObject = {
           from: defaultAccount,
           nonce,
-          gas: request.gas
+          gas,
+          gasLimit
         };
         const contractInstance = newContract([methodAbi], defaultAccount);
 
         contractInstance.options.address = to;
 
-        const parsedParameters =
-          parameters.length > 1 ? parameters.join(", ") : parameters[0];
         const receipt = await sendContractMethod(
           contractInstance,
           methodAbi.name,
           txObject,
-          parsedParameters
+          ...parameters
         );
         transactionHash(receipt.transactionHash, response);
       } catch (error) {
