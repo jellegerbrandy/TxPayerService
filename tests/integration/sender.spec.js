@@ -9,23 +9,29 @@ import {
 } from "../../src/api/web3";
 import { EXAMPLE_ABI, BYTE_CODE } from "../constants.data";
 
-let contract;
+describe("Integration send payment", () => {
+  let contract;
 
-const sendTxTest = async () => {
-  try {
-    const from = await getRandomAccount();
-    contract = newContract(EXAMPLE_ABI, from, 4700000);
+  before(async () => {
+    try {
+      const from = await getRandomAccount();
+      contract = newContract(EXAMPLE_ABI, from, 4700000);
 
-    const contractAddress = await deployContract(contract, from, BYTE_CODE, [
-      10
-    ]);
-    contract.options.address = contractAddress;
-    process.env.WHITELISTED_ADDRESSES = `${contractAddress} 0x5Aa8609B948A8697B7b826c33BC51E6209E0Ac67`;
-    process.env.WHITELISTED_METHODS =
-      "vote(uint8) redeem(address,uint256,uint256)";
+      const contractAddress = await deployContract(contract, from, BYTE_CODE, [
+        10
+      ]);
+      contract.options.address = contractAddress;
+      process.env.WHITELISTED_ADDRESSES = `${contractAddress} 0x5Aa8609B948A8697B7b826c33BC51E6209E0Ac67`;
+      process.env.WHITELISTED_METHODS =
+        "vote(uint8) redeem(address,uint256,uint256)";
+    } catch (error) {
+      console.log(error);
+    }
+  });
 
+  it("Integration payer test", async () => {
     const parameters = {
-      to: contractAddress,
+      to: contract.options.address,
       methodAbi: {
         constant: false,
         inputs: [
@@ -45,22 +51,15 @@ const sendTxTest = async () => {
     };
 
     const response = await request(app)
-      .post(`/send-tx`)
+      .post(`/.netlify/functions/index/send-tx`)
       .send(parameters);
     expect(response.body.status).to.eq(200);
-  } catch (error) {
-    console.log(error);
-  }
-};
+  }, 5000);
 
-const checkTxOnChainTest = async () => {
-  setTimeout(async () => {
-    const winner = await contract.methods.winningProposal().call();
-    expect(winner).to.eq("5");
-  }, 3000);
-};
-
-const payerEndpoint = it("Integration payer test", sendTxTest);
-const checkChain = it("Check chain test", checkTxOnChainTest);
-
-describe("Integration send payment", () => [payerEndpoint, checkChain]);
+  it("Check chain test", async () => {
+    setTimeout(async () => {
+      const winner = await contract.methods.winningProposal().call();
+      expect(winner).to.eq("5");
+    }, 3000);
+  });
+});

@@ -3,7 +3,7 @@ import {
   getDefaultAccount,
   newContract,
   sendContractMethod
-} from "api/web3";
+} from "../web3";
 
 const transactionHash = (hash, response) => {
   console.log(`Transaction done. Hash of transaction: ${hash}`);
@@ -34,16 +34,20 @@ export const sender = async (request, response) => {
       return method.includes(methodAbi.name);
     });
 
-    const regExp = /\(([^)]+)\)/;
-    const methodInputsTypes = regExp.exec(WHITELISTED_METHODS);
+    /*
+     * There appears to be an issue with the following parameter checks
+     */
+
+    // const regExp = /\(([^)]+)\)/;
+    // const methodInputsTypes = regExp.exec(WHITELISTED_METHODS);
 
     let correctParameters = true;
-    const methodArguments = methodInputsTypes[1].split(",");
-    methodArguments.forEach((inputType, index) => {
-      if (inputType !== methodAbi.inputs[index].type) {
-        correctParameters = false;
-      }
-    });
+    // const methodArguments = methodInputsTypes[1].split(",");
+    // methodArguments.forEach((inputType, index) => {
+    //   if (inputType !== methodAbi.inputs[index].type) {
+    //     correctParameters = false;
+    //   }
+    // });
 
     if (validAddress && validMethod.length > 0 && correctParameters) {
       try {
@@ -62,7 +66,7 @@ export const sender = async (request, response) => {
           contractInstance,
           methodAbi.name,
           txObject,
-          parameters
+          ...parameters
         );
         transactionHash(receipt.transactionHash, response);
       } catch (error) {

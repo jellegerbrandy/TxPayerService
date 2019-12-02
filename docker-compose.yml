@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   tx-payer-service:
@@ -10,10 +10,10 @@ services:
     links:
       - ganache
     environment:
-      - NETWORK_URL=http://ganache:8545
-      - WALLET_MNEOMONIC=myth like bonus scare over problem client lizard pioneer submit female collect
+      - NETWORK_URL=${NETWORK_URL}
+      - WALLET_MNEOMONIC=${WALLET_MNEMONIC}
     command: npm start
   ganache:
-    image: 'daostack/migration:0.0.1-rc.30-v0'
+    image: daostack/migration:0.0.1-rc.30-v0
     ports:
-      - '8545:8545'
+      - 8545:8545
