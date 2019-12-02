@@ -1,4 +1,4 @@
-import { web3, provider } from "./core";
+import { web3 } from "./core";
 import { fromWei } from "./utils";
 
 export const getBalance = async account => {
@@ -77,7 +77,8 @@ export const callContractMethod = (contractInstance, method, ...parameters) => {
 };
 
 export const checkWeb3Connection = async (_, response, next) => {
-  if (provider.engine.currentBlock) {
+  const isConnected = await web3.eth.net.isListening();
+  if (isConnected) {
     next();
   } else {
     response.send({

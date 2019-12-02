@@ -4,7 +4,7 @@ import request from "supertest";
 import app from "../../src/app";
 
 const getBalanceTest = async () => {
-  const response = await request(app).get("/balance");
+  const response = await request(app).get("/.netlify/functions/index/balance");
   expect(response.body.status).to.eq(200);
   expect(response.body.balance).to.be.a("string");
 };

@@ -3,14 +3,11 @@ language: node_js
 node_js:
   - 10
 
-cache:
-  directories:
-    - node_modules
-
 before_script:
+  - npm i
   - npm i -g ganache-cli
 
 script:
   - ganache-cli -m 'deal copy supply rally height clutch tornado cabbage ill shoe pizza help' > /dev/null &
   - sleep 5
-  - npm run tests
+  - npm run test

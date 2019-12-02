@@ -3,7 +3,7 @@ import {
   getDefaultAccount,
   newContract,
   sendContractMethod
-} from "api/web3";
+} from "../web3";
 
 const transactionHash = (hash, response) => {
   console.log(`Transaction done. Hash of transaction: ${hash}`);

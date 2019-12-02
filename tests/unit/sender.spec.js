@@ -30,6 +30,7 @@ const getPayerTest = async () => {
   });
   web3mock.expects("callContractMethod").returns("");
   web3mock.expects("sendContractMethod").returns("");
+  web3mock.expects("checkAccountBalance").returns("");
 
   const parameters = {
     to: "0xbcbFF059589c2c6A4530cb816EB398BC4096e923",
@@ -52,7 +53,7 @@ const getPayerTest = async () => {
   };
 
   const response = await request(app)
-    .post(`/send-tx`)
+    .post(`/.netlify/functions/index/send-tx`)
     .send(parameters);
   console.log(response.body);
   expect(response.body.status).to.eq(200);

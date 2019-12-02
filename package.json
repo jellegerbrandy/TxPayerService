@@ -1,39 +1,52 @@
 {
-  "name": "TxSenderService",
+  "name": "@dorgtech/txsender",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "src/index.js",
   "scripts": {
-    "start": "babel-node src/server.js",
-    "dev:local": "LOCAL=true nodemon --exec babel-node src/server.js",
-    "dev:rinkeby": "RINKEBY=true nodemon --exec babel-node src/server.js",
-    "tests:unit": "mocha --require @babel/register 'tests/unit/**spec.js' --exit",
-    "tests:integration": "mocha --require @babel/register 'tests/integration/**spec.js' --exit",
-    "tests": "mocha --require @babel/register 'tests/**/**spec.js' --exit"
+    "start": "node functions/index.js",
+    "build": "webpack && netlify-lambda build ./build",
+    "serve": "netlify-lambda serve ./build",
+    "dev:local": "LOCAL=true nodemon --exec node functions/index.js",
+    "dev:rinkeby": "RINKEBY=true nodemon --exec node functions/index.js",
+    "test:unit": "mocha -r @babel/register -r @babel/polyfill 'tests/unit/**spec.js' --exit",
+    "test:integration": "mocha -r @babel/register -r @babel/polyfill 'tests/integration/**spec.js' --exit",
+    "test": "mocha -r @babel/register -r @babel/polyfill 'tests/**/**spec.js' --exit"
   },
-  "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/runtime": "^7.7.4",
     "@truffle/hdwallet-provider": "^1.0.22",
     "app-module-path": "^2.2.0",
     "dotenv": "^8.0.0",
+    "electron": "^7.1.2",
     "express": "^4.16.4",
     "morgan": "^1.9.1",
-    "web3": "^1.2.2"
+    "netlify-lambda": "^1.6.3",
+    "scrypt": "^6.0.3",
+    "serverless-http": "^2.3.0",
+    "web3": "1.2.2"
   },
   "devDependencies": {
     "@babel/core": "^7.4.4",
-    "@babel/node": "^7.2.2",
-    "@babel/preset-env": "^7.4.4",
-    "@babel/register": "^7.6.2",
+    "@babel/node": "^7.7.4",
+    "@babel/plugin-transform-runtime": "^7.7.4",
+    "@babel/polyfill": "^7.7.0",
+    "@babel/preset-env": "^7.7.4",
+    "@babel/register": "^7.7.4",
+    "babel-loader": "^8.0.6",
+    "babel-preset-env": "^1.7.0",
     "chai": "^4.2.0",
     "husky": "^3.0.9",
     "mocha": "^6.2.2",
+    "node-loader": "^0.6.0",
     "nodemon": "^1.19.0",
     "prettier": "^1.18.2",
     "pretty-quick": "^2.0.0",
     "sinon": "^7.5.0",
-    "supertest": "^4.0.2"
+    "supertest": "^4.0.2",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
   },
   "husky": {
     "hooks": {

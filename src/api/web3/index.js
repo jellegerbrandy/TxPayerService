@@ -7,7 +7,6 @@ export {
   getTransactionNumber,
   newContract,
   sendContractMethod,
-  encodeParameter,
   deployContract,
   checkWeb3Connection,
   checkAccountBalance,
