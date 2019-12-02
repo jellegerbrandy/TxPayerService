@@ -71,7 +71,7 @@ This is an example of how you should send the parameters:
     "payable": false,
     "stateMutability": "nonpayable",
     "type": "function"
-  }
+  },
 	"parameters": [0x6ebe4210302C28804fF1136706E5166D0F8852f2, 10]
 }
 ```
