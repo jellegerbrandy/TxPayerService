@@ -8,7 +8,7 @@ module.exports = {
   },
   target: "node",
   optimization: {
-    // We no not want to minimize our code.
+    // We do not want to minimize our code.
     minimize: false
   },
   module: {
@@ -26,7 +26,7 @@ module.exports = {
   },
   resolve: {
     alias: {
-      // replace native `scrypt` module with pure js `js-scrypt`
+      // replace native `scrypt` module with pure js `scrypt-js`
       scrypt: "scrypt-js"
     }
   }
