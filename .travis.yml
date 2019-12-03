@@ -11,3 +11,4 @@ script:
   - ganache-cli -m 'deal copy supply rally height clutch tornado cabbage ill shoe pizza help' > /dev/null &
   - sleep 5
   - npm run test
+  - npm run build

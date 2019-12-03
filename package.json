@@ -6,9 +6,8 @@
   "scripts": {
     "start": "node functions/index.js",
     "build": "webpack && netlify-lambda build ./build",
-    "serve": "netlify-lambda serve ./build",
-    "dev:local": "LOCAL=true nodemon --exec node functions/index.js",
-    "dev:rinkeby": "RINKEBY=true nodemon --exec node functions/index.js",
+    "dev:local": "LOCAL=true nodemon --exec babel-node src/index.js",
+    "dev:rinkeby": "RINKEBY=true nodemon --exec babel-node src/index.js",
     "test:unit": "mocha -r @babel/register -r @babel/polyfill 'tests/unit/**spec.js' --exit",
     "test:integration": "mocha -r @babel/register -r @babel/polyfill 'tests/integration/**spec.js' --exit",
     "test": "mocha -r @babel/register -r @babel/polyfill 'tests/**/**spec.js' --exit"
