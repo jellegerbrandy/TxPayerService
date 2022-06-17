@@ -20,7 +20,7 @@
     "app-module-path": "^2.2.0",
     "bip39": "^3.0.2",
     "dotenv": "^8.0.0",
-    "electron": "^7.1.2",
+    "electron": "^15.5.5",
     "express": "^4.16.4",
     "morgan": "^1.9.1",
     "netlify-lambda": "^1.6.3",
