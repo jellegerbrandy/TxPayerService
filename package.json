@@ -21,7 +21,7 @@
     "bip39": "^3.0.2",
     "dotenv": "^8.0.0",
     "electron": "^7.1.2",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "morgan": "^1.9.1",
     "netlify-lambda": "^1.6.3",
     "scrypt": "^6.0.3",
